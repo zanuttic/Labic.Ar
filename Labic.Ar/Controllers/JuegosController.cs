@@ -19,12 +19,52 @@ namespace Labic.Ar.Controllers
         }
 
         // GET: Juegos
-        public async Task<IActionResult> Index(string SortOrder)
+        public async Task<IActionResult> Index(string SortOrder,string currentFilter, string searchString, int? page)
         {
             ViewData["NombreSortParm"] = String.IsNullOrEmpty(SortOrder) ? "nombre_desc" : "";
-            ViewData["DescripcionSortParam"] = SortOrder == "descripcion_asc" ? "descripcion_desc" : "descripcion_ac";
+            ViewData["CategoriaSortParam"] = SortOrder == "categoria_asc" ? "categoria_desc" : "categoria_asc";
 
-            return View(await _context.Juegos.ToListAsync());
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentSort"] = SortOrder;
+
+            var juegos = from j in _context.Juegos select j;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                juegos = juegos.Where(j => j.Nombre.Contains(searchString)|| j.Categoria.Contains(searchString)|| j.Descripcion.Contains(searchString));
+
+            }
+
+            switch (SortOrder)
+            {
+                case "nombre_desc":
+                    juegos = juegos.OrderByDescending(j => j.Nombre);
+                    break;
+                case "categoria_desc":
+                    juegos = juegos.OrderByDescending(j => j.Categoria);
+                    break;
+                case "categoria_asc":
+                    juegos = juegos.OrderBy(j => j.Categoria);
+                    break;
+                default:
+                    juegos = juegos.OrderBy(j => j.Nombre);
+                    break;
+
+
+            }
+
+            int pageSize = 3;
+            return View(await Paginacion<Juegos>.CreateAsync(juegos.AsNoTracking(), page ?? 1, pageSize));
+           // return View(await juegos.AsNoTracking().ToListAsync());
+
+            //return View(await _context.Juegos.ToListAsync());
         }
 
         // GET: Juegos/Details/5
@@ -56,7 +96,7 @@ namespace Labic.Ar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("JuegosID,Nombre,Categoria,Descripcion,Estado")] Juegos juegos)
+        public async Task<IActionResult> Create([Bind("JuegosID,Nombre,Categoria,Descripcion,Estado,Multijugador")] Juegos juegos)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +128,7 @@ namespace Labic.Ar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("JuegosID,Nombre,Categoria,Descripcion,Estado")] Juegos juegos)
+        public async Task<IActionResult> Edit(int id, [Bind("JuegosID,Nombre,Categoria,Descripcion,Estado,Multijugador")] Juegos juegos)
         {
             if (id != juegos.JuegosID)
             {

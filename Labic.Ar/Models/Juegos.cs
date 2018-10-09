@@ -24,7 +24,11 @@ namespace Labic.Ar.Models
             [Display(Name = "Descripción")]
             public string Descripcion { get; set; }
 
-            public Boolean Estado { get; set; }
+        [Display(Name = "Estado Activo")]
+        public Boolean Estado { get; set; }
+
+        [Display(Name = "Multi jugador")]
+        public Boolean Multijugador { get; set; }
 
     }
 }

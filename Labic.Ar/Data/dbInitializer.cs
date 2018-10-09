@@ -19,8 +19,8 @@ namespace Labic.Ar.Data
             //si aun no se ha cargado ningu registro 
             //genera la carga inicial en la db
             var listaJuego = new Juegos[] {
-                new Juegos { Nombre = "MemoTest", Categoria = "Ejercitacion", Descripcion = "Ejercitacion de la memoria a corto plazo", Estado = true },
-                new Juegos { Nombre = "Virtualidad Real", Categoria = "Ejercitacion", Descripcion = "Ejercitacion de la memoria a largo plazo", Estado = true }
+                new Juegos { Nombre = "MemoTest", Categoria = "Ejercitacion", Descripcion = "Ejercitacion de la memoria a corto plazo", Estado = true , Multijugador= false},
+                new Juegos { Nombre = "Virtualidad Real", Categoria = "Ejercitacion", Descripcion = "Ejercitacion de la memoria a largo plazo", Estado = true, Multijugador= false }
             };
 
             foreach (var j in listaJuego)
