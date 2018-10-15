@@ -2,67 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Labic.Ar.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Labic.Ar.Models;
 
-namespace Labic.Ar.Controllers
+namespace Labic.Ar.ApiControllers
 {
-    //[Produces("application")]
     [Route("api/[controller]")]
     [ApiController]
-    public class LabicController : ControllerBase
+    public class MetricsController : ControllerBase
     {
         private readonly LabicArContext _context;
 
-        
-        public LabicController(LabicArContext context)
+        public MetricsController(LabicArContext context)
         {
             _context = context;
         }
-
-        // GET: api/Labic
+        // GET: api/Metrics
         [HttpGet]
-        public IEnumerable<Juegos> GetJuegos()
+        public IEnumerable<Metrics> GetMetrics()
         {
-            return _context.Juegos;
+            return _context.Metrics.Include(j => j.Jugadores).Include(p =>p.Jugadores.Personas).Include( e=>e.Eventos);
         }
 
         // GET: api/Labic/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetJuegos([FromRoute] int id)
+        public async Task<IActionResult> GetMetrics([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var juegos = await _context.Juegos.FindAsync(id);
+            var Metrics = await _context.Metrics.FindAsync(id);
 
-            if (juegos == null)
+            if (Metrics == null)
             {
                 return NotFound();
             }
 
-            return Ok(juegos);
+            return Ok(Metrics);
         }
 
         // PUT: api/Labic/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutJuegos([FromRoute] int id, [FromBody] Juegos juegos)
+        public async Task<IActionResult> PutMetrics([FromRoute] int id, [FromBody] Metrics Metrics)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != juegos.JuegosID)
+            if (id != Metrics.MetricsId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(juegos).State = EntityState.Modified;
+            _context.Entry(Metrics).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +67,7 @@ namespace Labic.Ar.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!JuegosExists(id))
+                if (!MetricsExists(id))
                 {
                     return NotFound();
                 }
@@ -85,43 +82,43 @@ namespace Labic.Ar.Controllers
 
         // POST: api/Labic
         [HttpPost]
-        public async Task<IActionResult> PostJuegos([FromBody] Juegos juegos)
+        public async Task<IActionResult> PostMetrics([FromBody] Metrics Metrics)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Juegos.Add(juegos);
+            _context.Metrics.Add(Metrics);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetJuegos", new { id = juegos.JuegosID }, juegos);
+            return CreatedAtAction("GetMetrics", new { id = Metrics.MetricsId }, Metrics);
         }
 
         // DELETE: api/Labic/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteJuegos([FromRoute] int id)
+        public async Task<IActionResult> DeleteMetrics([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var juegos = await _context.Juegos.FindAsync(id);
-            if (juegos == null)
+            var Metrics = await _context.Metrics.FindAsync(id);
+            if (Metrics == null)
             {
                 return NotFound();
             }
 
-            _context.Juegos.Remove(juegos);
+            _context.Metrics.Remove(Metrics);
             await _context.SaveChangesAsync();
 
-            return Ok(juegos);
+            return Ok(Metrics);
         }
 
-        private bool JuegosExists(int id)
+        private bool MetricsExists(int id)
         {
-            return _context.Juegos.Any(e => e.JuegosID == id);
+            return _context.Metrics.Any(e => e.MetricsId == id);
         }
     }
 }

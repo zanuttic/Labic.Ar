@@ -1,0 +1,37 @@
+Post metricas
+
+    {
+        
+        "jugadores": {
+            "userName": "Hammer",
+            "personas": {
+                "nombre": "Carlos",
+                "apellido": "Zanutti",
+                "correoElectronico": "carlos.zanutti@gmail.com",
+                "fechaNacimiento": "31/10/1976",
+                "pais": "Argentina",
+                "provincia": "Santa Fe",
+                "cuidad": "Rosario",
+                "sexo": "Masculino"
+        			    }
+        			},
+        "horaInicio": "2018-10-12T16:31:34.4703023",
+        "cantidadEventos": 5,
+        "eventos": [
+            {
+        
+                "tiempo": 23,
+                "cantEstimulos": 3,
+                "resultadoOK": true,
+        
+            },
+            {
+        
+                "tiempo": 56,
+                "cantEstimulos": 4,
+                "resultadoOK": false,
+        
+            }
+        ],
+        "observacionProfesor": "Desarrollo con Normalidad"
+    }

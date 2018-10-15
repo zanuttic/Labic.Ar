@@ -8,8 +8,8 @@ namespace Labic.Ar.Models
 {
     public class Juegos
     {
-        
-            public int JuegosID { get; set; }
+        [Key]
+        public int JuegosID { get; set; }
 
             [Required(ErrorMessage = "Campo Requerido")]
             [StringLength(50, MinimumLength = 3, ErrorMessage = "Verifique que la cantidad de caracteres ingresado sea mayor a 3 y menor de 50")]
@@ -30,5 +30,6 @@ namespace Labic.Ar.Models
         [Display(Name = "Multi jugador")]
         public Boolean Multijugador { get; set; }
 
+        
     }
 }
