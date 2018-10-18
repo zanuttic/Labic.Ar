@@ -47,6 +47,10 @@ namespace Labic.Ar.Models
         [Required(ErrorMessage = "Campo Requerido")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Verifique que la cantidad de caracteres ingresado sea mayor a 3 y menor de 50")]
         public string Sexo { get; set; }
-               
+
+        [Required(ErrorMessage = "Campo Requerido")]
+        [StringLength(8, MinimumLength = 6, ErrorMessage = "Verifique que la cantidad de caracteres ingresado sea mayor a 6 y menor de 8")]
+        public string Documento { get; set; }
+
     }
 }

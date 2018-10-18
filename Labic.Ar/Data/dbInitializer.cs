@@ -40,15 +40,32 @@ namespace Labic.Ar.Data
                 ListaEventos.Add(eventos2);
                 //si aun no se ha cargado ningu registro 
                 //genera la carga inicial en la db
+                var Jugador = new Jugadores
+                {
+                    UserName = "Hammer",
+                    Personas = new Personas
+                    {
+                        Nombre = "Carlos",
+                        Apellido = "Zanutti",
+                        CorreoElectronico = "carlos.zanutti@gmail.com",
+                        Cuidad = "Rosario",
+                        FechaNacimiento = "31/10/1976",
+                        Pais = "Argentina",
+                        Provincia = "Santa Fe",
+                        Sexo = "Masculino",
+                        Documento = "17932659"
+                    },
+                    Patologia= "sindrome de down"
+                };
+                context.Jugadores.Add(Jugador);
+
                 var listaMetricas = new Metrics[] {
                 new Metrics { CantidadEventos=5,
                               Eventos = new List<Eventos>(ListaEventos),
                               HoraInicio = DateTime.Now,
                               JuegoId = 1,
-                              Jugadores = new Jugadores{ UserName="Hammer",
-                 Personas = new Personas{ Nombre="Carlos", Apellido="Zanutti", CorreoElectronico="carlos.zanutti@gmail.com", Cuidad="Rosario", FechaNacimiento="31/10/1976", Pais="Argentina", Provincia="Santa Fe", Sexo="Masculino"
-                 }
-                 }, ObservacionProfesor="Desarrollo con Normalidad" },
+                              JugadorId=1,
+                              ObservacionProfesor="Desarrollo con Normalidad" },
 
             };
 

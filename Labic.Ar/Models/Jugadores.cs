@@ -22,7 +22,8 @@ namespace Labic.Ar.Models
         [Required(ErrorMessage = "Campo Requerido")]
         public Personas Personas { get; set; }
 
-        public int MetricsId { get; set; }
+        [StringLength(250, MinimumLength = 0, ErrorMessage = "Verifique que la cantidad de caracteres ingresado sea mayor a 0 y menor de 250")]
+        public string Patologia { get; set; }
 
 
     }

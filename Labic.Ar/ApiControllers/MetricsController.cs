@@ -23,7 +23,7 @@ namespace Labic.Ar.ApiControllers
         [HttpGet]
         public IEnumerable<Metrics> GetMetrics()
         {
-            return _context.Metrics.Include(j => j.Jugadores).Include(p =>p.Jugadores.Personas).Include( e=>e.Eventos);
+            return _context.Metrics.Include( e=>e.Eventos);
         }
 
         // GET: api/Labic/5

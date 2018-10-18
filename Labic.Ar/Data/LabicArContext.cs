@@ -15,6 +15,8 @@ namespace Labic.Ar.Models
 
         public DbSet<Juegos> Juegos { get; set; }
         public DbSet<Metrics> Metrics { get; set; }
+        public DbSet<Jugadores> Jugadores { get; set; }
+        public DbSet<Personas> Personas { get; set; }
 
     }
 }

@@ -14,7 +14,7 @@ namespace Labic.Ar.Models
        public Metrics()
         {
             Eventos = new List<Eventos>();
-            Jugadores = new Jugadores();
+           // Jugadores = new Jugadores();
 
         }
 
@@ -25,7 +25,8 @@ namespace Labic.Ar.Models
         /// <summary>
         /// jugador asociado a la metrica
         /// </summary>
-        public Jugadores Jugadores { get; set; }
+        //public Jugadores Jugadores { get; set; }
+        public int JugadorId { get; set; }
         
 
         /// <summary>
