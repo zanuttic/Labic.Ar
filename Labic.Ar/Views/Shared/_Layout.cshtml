@@ -26,14 +26,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Labic.Ar</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Inicio</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
-                    <li><a asp-area="" asp-controller="Juegos" asp-action="Index">Juegos</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Sobre LabicAr</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>*@
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">Sobre nosotros</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Proyectos">Proyectos</a></li>*@
+                    <li><a asp-area="" asp-controller="MetricasView" asp-action="Index">Resultados</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contacto</a></li>
+                    
+
+                    @*<li><a asp-area="" asp-controller="Juegos" asp-action="Index">Juegos</a></li>*@
+
+
                 </ul>
             </div>
         </div>

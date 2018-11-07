@@ -9,21 +9,19 @@ using Labic.Ar.Models;
 
 namespace Labic.Ar.Controllers
 {
-    public class JuegosController : Controller
+    public class MetricasViewController : Controller
     {
         private readonly LabicArContext _context;
 
-        public JuegosController(LabicArContext context)
+        public MetricasViewController(LabicArContext context)
         {
             _context = context;
         }
 
-        // GET: Juegos
-        public async Task<IActionResult> Index(string SortOrder,string currentFilter, string searchString, int? page)
+        // GET: MetricaViews
+        public async Task<IActionResult> Index(string SortOrder, string currentFilter, string searchString, int? page)
         {
             ViewData["NombreSortParm"] = String.IsNullOrEmpty(SortOrder) ? "nombre_desc" : "";
-            ViewData["CategoriaSortParam"] = SortOrder == "categoria_asc" ? "categoria_desc" : "categoria_asc";
-
             if (searchString != null)
             {
                 page = 1;
@@ -35,39 +33,49 @@ namespace Labic.Ar.Controllers
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentSort"] = SortOrder;
 
-            var juegos = from j in _context.Juegos select j;
+            var metricasView = from m in _context.MetricasView select m;
             if (!String.IsNullOrEmpty(searchString))
             {
-                juegos = juegos.Where(j => j.Nombre.Contains(searchString)|| j.Categoria.Contains(searchString)|| j.Descripcion.Contains(searchString));
+                metricasView = metricasView.Where(m => m.Documento.Contains(searchString) || m.Nombre.Contains(searchString) || m.Apellido.Contains(searchString) || m.UserName.Contains(searchString));
 
             }
 
             switch (SortOrder)
             {
                 case "nombre_desc":
-                    juegos = juegos.OrderByDescending(j => j.Nombre);
+                    metricasView = metricasView.OrderByDescending(m => m.Nombre);
                     break;
-                case "categoria_desc":
-                    juegos = juegos.OrderByDescending(j => j.Categoria);
+                case "apellido_desc":
+                    metricasView = metricasView.OrderByDescending(m => m.Apellido);
                     break;
-                case "categoria_asc":
-                    juegos = juegos.OrderBy(j => j.Categoria);
+                case "apellido_asc":
+                    metricasView = metricasView.OrderBy(m => m.Apellido);
+                    break;
+                case "documento_desc":
+                    metricasView = metricasView.OrderByDescending(m => m.Documento);
+                    break;
+                case "documento_asc":
+                    metricasView = metricasView.OrderBy(m => m.Documento);
+                    break;
+                case "useName_desc":
+                    metricasView = metricasView.OrderByDescending(m => m.UserName);
+                    break;
+                case "useName_asc":
+                    metricasView = metricasView.OrderBy(m => m.UserName);
                     break;
                 default:
-                    juegos = juegos.OrderBy(j => j.Nombre);
+                    metricasView = metricasView.OrderBy(m => m.Nombre).OrderBy(m => m.HoraInicio );
                     break;
 
 
             }
 
-            int pageSize = 10;
-            return View(await Paginacion<Juegos>.CreateAsync(juegos.AsNoTracking(), page ?? 1, pageSize));
-           // return View(await juegos.AsNoTracking().ToListAsync());
-
-            //return View(await _context.Juegos.ToListAsync());
+            int pageSize = 7;
+            return View(await Paginacion<MetricasView>.CreateAsync(metricasView.AsNoTracking(), page ?? 1, pageSize));
+            //return View(await _context.MetricasView.ToListAsync());
         }
 
-        // GET: Juegos/Details/5
+        // GET: MetricaViews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -75,39 +83,39 @@ namespace Labic.Ar.Controllers
                 return NotFound();
             }
 
-            var juegos = await _context.Juegos
-                .FirstOrDefaultAsync(m => m.JuegosID == id);
-            if (juegos == null)
+            var metricaView = await _context.MetricasView
+                .FirstOrDefaultAsync(m => m.MetricsId == id);
+            if (metricaView == null)
             {
                 return NotFound();
             }
 
-            return View(juegos);
+            return View(metricaView);
         }
 
-        // GET: Juegos/Create
+        // GET: MetricaViews/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Juegos/Create
+        // POST: MetricaViews/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("JuegosID,Nombre,Categoria,Descripcion,Estado,Multijugador")] Juegos juegos)
+        public async Task<IActionResult> Create([Bind("MetricsId,JugadoresId,UserName,Nombre,Apellido,HoraInicio,ObservacionProfesor")] MetricasView metricaView)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(juegos);
+                _context.Add(metricaView);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(juegos);
+            return View(metricaView);
         }
 
-        // GET: Juegos/Edit/5
+        // GET: MetricaViews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -115,22 +123,22 @@ namespace Labic.Ar.Controllers
                 return NotFound();
             }
 
-            var juegos = await _context.Juegos.FindAsync(id);
-            if (juegos == null)
+            var metricaView = await _context.MetricasView.FindAsync(id);
+            if (metricaView == null)
             {
                 return NotFound();
             }
-            return View(juegos);
+            return View(metricaView);
         }
 
-        // POST: Juegos/Edit/5
+        // POST: MetricaViews/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("JuegosID,Nombre,Categoria,Descripcion,Estado,Multijugador")] Juegos juegos)
+        public async Task<IActionResult> Edit(int id, [Bind("MetricsId,JugadoresId,UserName,Nombre,Apellido,HoraInicio,ObservacionProfesor")] MetricasView metricaView)
         {
-            if (id != juegos.JuegosID)
+            if (id != metricaView.MetricsId)
             {
                 return NotFound();
             }
@@ -139,12 +147,12 @@ namespace Labic.Ar.Controllers
             {
                 try
                 {
-                    _context.Update(juegos);
+                    _context.Update(metricaView);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!JuegosExists(juegos.JuegosID))
+                    if (!MetricaViewExists(metricaView.MetricsId))
                     {
                         return NotFound();
                     }
@@ -155,10 +163,10 @@ namespace Labic.Ar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(juegos);
+            return View(metricaView);
         }
 
-        // GET: Juegos/Delete/5
+        // GET: MetricaViews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -166,30 +174,30 @@ namespace Labic.Ar.Controllers
                 return NotFound();
             }
 
-            var juegos = await _context.Juegos
-                .FirstOrDefaultAsync(m => m.JuegosID == id);
-            if (juegos == null)
+            var metricaView = await _context.MetricasView
+                .FirstOrDefaultAsync(m => m.MetricsId == id);
+            if (metricaView == null)
             {
                 return NotFound();
             }
 
-            return View(juegos);
+            return View(metricaView);
         }
 
-        // POST: Juegos/Delete/5
+        // POST: MetricaViews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var juegos = await _context.Juegos.FindAsync(id);
-            _context.Juegos.Remove(juegos);
+            var metricaView = await _context.MetricasView.FindAsync(id);
+            _context.MetricasView.Remove(metricaView);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool JuegosExists(int id)
+        private bool MetricaViewExists(int id)
         {
-            return _context.Juegos.Any(e => e.JuegosID == id);
+            return _context.MetricasView.Any(e => e.MetricsId == id);
         }
     }
 }

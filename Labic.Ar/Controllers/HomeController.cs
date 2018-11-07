@@ -17,7 +17,7 @@ namespace Labic.Ar.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "EmpleaRV, “Cambiemos la realidad”";
 
             return View();
         }
@@ -30,6 +30,15 @@ namespace Labic.Ar.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+        public IActionResult Proyectos()
         {
             return View();
         }
