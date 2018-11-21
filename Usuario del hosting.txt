@@ -1,0 +1,38 @@
+url: https://www.wi381924.ferozo.com:2092
+Usu: wi381924@wi381924.ferozo.com
+
+Pass: senoGE45fu
+
+
+www.empleavr.org
+
+
+Sitio App: EmpleaRV.azurewebsites.net
+
+Servidor SQL: czanuttiserver01.database.windows.net
+
+Usuario: czanutti
+Pass: Nochero02
+
+
+Server=.\SQLSERVER;Database=LabicAr;Trusted_Connection=True;MultipleActiveResultSets=true
+
+Server=tcp:czanuttiserver01.database.windows.net,1433;Initial Catalog=LabicAr;Persist Security Info=False;User ID=czanutti;Password=Nochero02;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
+
+
+
+dns
+empleavr.org	SOA	ns3.hostmar.com root.hostmar.com 2018102200 28800 ...	
+empleavr.org	NS	ns3.hostmar.com	 
+empleavr.org	NS	ns4.hostmar.com	 
+empleavr.org	A	200.58.115.8	 
+www.empleavr.org	CNAME	empleavr.org	 
+mipanel.empleavr.org	A	200.58.109.42	 
+mx1.empleavr.org	A	200.58.122.206	 
+empleavr.org	MX	mx1.empleavr.org	 
+empleavr.org	TXT	v=spf1 include:spf.hostmar.com -all	 
+bypass.empleavr.org	A	200.58.115.8	 
+ftp.empleavr.org	A	200.58.115.8	 
+empleavr.org	MX	mail.empleavr.org	 
+mail.empleavr.org	A	200.58.115.8
